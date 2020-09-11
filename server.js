@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 
 // INIT APP
 const app = express();
@@ -34,13 +35,14 @@ app.use(
 app.use(cookieParser());
 app.use(
   cors({
-    origin: false,
+    origin: "http://localhost:3001",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );
 app.use(session({ secret: "cats", resave: true, saveUninitialized: true }));
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false, type: "application/json" }));
+app.use(bodyParser.json());
 app.use(passport.initialize());
 
 // ROUTES
